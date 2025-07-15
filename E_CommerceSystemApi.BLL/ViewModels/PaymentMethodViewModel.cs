@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace E_CommerceSystemApi.BLL.ViewModels
+{
+    public class PaymentMethodViewModel
+    {
+        public int PaymentMethodID { get; set; }
+        public string MethodName { get; set; }
+    }
+}

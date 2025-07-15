@@ -4,6 +4,11 @@ using System.Diagnostics.Metrics;
 using System;
 using Microsoft.EntityFrameworkCore;
 using E_CommerceSystemApi.DAL.Data;
+using E_CommerceSystemApi.BLL.Services.impl;
+using E_CommerceSystemApi.BLL.Services.intf;
+using E_CommerceSystemApi.DAL.Repository.intf;
+using E_CommerceSystemApi.DAL.Repository.impl;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +19,19 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Dependency Injection for Services and Repositories
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IPaymentMethodService, PaymentMethodService>();
+//builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+// AutoMapper registered here
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -32,17 +50,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
-//var context = new ApplicationDbContext();
-//try
-//{
-//    context.Database.CanConnect();
-//    Console.WriteLine("Database connection successful.");
-//}
-//catch (Exception ex)
-//{
-//    Console.WriteLine("Database connection failed:" + ex.Message);
 
-//}
 app.MapControllers();
 
 app.Run();
