@@ -21,6 +21,8 @@ namespace E_CommerceSystemApi.BLL.Mappings
             CreateMap<Product, ProductViewModel>().ReverseMap();
             CreateMap<Category, CategoryViewModel>().ReverseMap();
             CreateMap<PaymentMethod, PaymentMethodViewModel>().ReverseMap();
+            CreateMap<Order, OrderViewModel>().ReverseMap();
+            CreateMap<OrderItem, OrderItemViewModel>().ReverseMap();
         }
     }
 }

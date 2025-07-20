@@ -11,7 +11,7 @@ namespace E_CommerceSystemApi.BLL.Services.intf
     {
         Task<IEnumerable<CategoryViewModel>> GetCategories();
         Task<CategoryViewModel> GetCategoryById(int id);
-        Task AddCategory(CategoryViewModel category);
+        Task<CategoryViewModel> AddCategory(CategoryViewModel category);
         Task<bool> DeleteCategory(int id);
         Task <bool>UpdateCategory(CategoryViewModel category);
     }

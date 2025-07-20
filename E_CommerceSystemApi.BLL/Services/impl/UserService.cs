@@ -23,10 +23,20 @@ namespace E_CommerceSystemApi.BLL.Services.impl
                 _mapper = mapper;
             }
 
-            public async Task AddUser(UserCreateViewModel userCreateViewModel)
+            public async Task<UserViewModel> AddUser(UserCreateViewModel userCreateViewModel)
+            {
+            try
             {
                 var user = _mapper.Map<User>(userCreateViewModel);
                 await _UserRepository.Add(user);
+                return _mapper.Map<UserViewModel>(user);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Erroe in AddUser:{ex.Message}");
+                return null;
+            }
+                
             }
 
             public async Task DeleteUser(int id)

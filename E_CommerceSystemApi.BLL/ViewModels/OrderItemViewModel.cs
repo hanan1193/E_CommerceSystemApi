@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace E_CommerceSystemApi.BLL.ViewModels
 {
-    internal class OrderItemViewModel
+    public class OrderItemViewModel
     {
+        public int OrderItemID { get; set; }
+        public decimal TotalPrice { get; set; }
+        // Foreign Key
+        public int OrderID { get; set; }
+        public int ProductID { get; set; }
     }
 }

@@ -32,10 +32,10 @@ namespace E_CommerceSystemApi.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(UserCreateViewModel user)
+        public async Task<IActionResult> Post(UserCreateViewModel userViewModel)
         {
-            await _userService.AddUser(user);
-            return Ok();
+                var createdUser = await _userService.AddUser(userViewModel);
+                return CreatedAtAction(nameof(Get),new {id=createdUser.UserID},createdUser) ;
         }
 
         [HttpPut]

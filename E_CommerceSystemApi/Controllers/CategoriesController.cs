@@ -40,17 +40,19 @@ namespace E_CommerceSystemApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCategory([FromBody] CategoryViewModel model)
+        public async Task<IActionResult> AddCategory([FromBody] CategoryViewModel categoryViewModelmodel)
         {
-            await _categoryService.AddCategory(model);
-            //return Ok("Category added successfully");
-            return CreatedAtAction(nameof(GetCategory), new { id = model.Id }, model);
+            var createdCategory= await _categoryService.AddCategory(categoryViewModelmodel);
+            return CreatedAtAction(nameof(GetCategory), new { id = createdCategory.Id }, createdCategory);
         }
-
-        [HttpPut]
-        public async Task<IActionResult> UpdateCategory([FromBody] CategoryViewModel model)
+        // api/Categories/{id} 
+        // Endpoint to update a category by ID.
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCategory(int id,[FromBody] CategoryViewModel categoryViewModelmodel)
         {
-            var result = await _categoryService.UpdateCategory(model);
+            if (id != categoryViewModelmodel.Id)
+                return BadRequest("ID mismatch");
+            var result = await _categoryService.UpdateCategory(categoryViewModelmodel);
             if (!result)
                 return NotFound("Category not found");
 

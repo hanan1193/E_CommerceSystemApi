@@ -22,15 +22,17 @@ namespace E_CommerceSystemApi.BLL.Services.impl
             _mapper = mapper;
         }
 
-        public async Task  AddCategory(CategoryViewModel categoryViewModel)
+        public async Task<CategoryViewModel> AddCategory(CategoryViewModel categoryViewModel)
         {
             try
             {
                 var category = _mapper.Map<Category>(categoryViewModel);
                 await _categoryRepository.Add(category);
+                return _mapper.Map<CategoryViewModel>(category);
             }
             catch(Exception ex){
                 Console.WriteLine($"Error in AddCategory: {ex.Message}");
+                return null;
             }
         }
 
@@ -68,7 +70,7 @@ namespace E_CommerceSystemApi.BLL.Services.impl
             {
                 var category = await _categoryRepository.GetById(id);
                 if (category == null)
-                    return null;
+                    throw new Exception("Category item not found.");
 
                 var categoryViewModel = _mapper.Map<CategoryViewModel>(category);
                 return categoryViewModel;

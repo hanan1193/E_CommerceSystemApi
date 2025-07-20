@@ -11,7 +11,7 @@ namespace E_CommerceSystemApi.BLL.Services.intf
     {
         Task<IEnumerable<ProductViewModel>> GetProducts();
         Task<ProductViewModel> GetProductById(int id);
-        Task AddProduct(ProductViewModel product);
+        Task<ProductViewModel> AddProduct(ProductViewModel product);
         Task<bool> DeleteProduct(int id);
         Task UpdateProduct(ProductViewModel product);
 

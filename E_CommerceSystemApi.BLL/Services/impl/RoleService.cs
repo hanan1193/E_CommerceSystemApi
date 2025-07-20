@@ -21,10 +21,20 @@ namespace E_CommerceSystemApi.BLL.Services.impl
             _roleRepository = roleRepository;
             _mapper = mapper;
         }
-        public async Task AddRole(RoleViewModel roleViewModel)
+        public async Task<RoleViewModel> AddRole(RoleViewModel roleViewModel)
         {
-            var role = _mapper.Map<Role>(roleViewModel);
-            await _roleRepository.Add(role);
+            try
+            {
+                var role = _mapper.Map<Role>(roleViewModel);
+                await _roleRepository.Add(role);
+                return _mapper.Map<RoleViewModel>(role);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error in AddRole:{ex.Message}");
+                return null;
+            }
+           
         }
         //public async Task DeleteRole(int id)
         //{

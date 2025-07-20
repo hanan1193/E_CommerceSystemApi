@@ -22,16 +22,18 @@ namespace E_CommerceSystemApi.BLL.Services.impl
             _mapper = mapper;
         }
 
-        public async Task AddProduct(ProductViewModel productViewModel)
+        public async Task<ProductViewModel> AddProduct(ProductViewModel productViewModel)
         {
             try
             {
                 var product = _mapper.Map<Product>(productViewModel);
                 await _productRepository.Add(product);
+                return _mapper.Map<ProductViewModel>(product);
             }
             catch(Exception ex)
             {
                 Console.WriteLine($"Error in AddProduct:{ex.Message}");
+                return null;
             }
         }
 

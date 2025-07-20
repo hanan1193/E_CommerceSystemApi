@@ -11,7 +11,7 @@ namespace E_CommerceSystemApi.BLL.Services.intf
     {
         Task<IEnumerable<RoleViewModel>> GetRoles();
         Task<RoleViewModel> GetRoleById(int id);
-        Task AddRole(RoleViewModel role);
+        Task<RoleViewModel> AddRole(RoleViewModel role);
         Task<bool> DeleteRole(int id);
         Task UpdateRole(RoleViewModel role);
     }

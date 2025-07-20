@@ -11,7 +11,7 @@ namespace E_CommerceSystemApi.BLL.Services.intf
     {
         Task<IEnumerable<PaymentMethodViewModel>> GetPaymentMethods();
         Task<PaymentMethodViewModel> GetPaymentMethodById(int id);
-        Task AddPaymentMethod(PaymentMethodViewModel paymentMethod);
+        Task<PaymentMethodViewModel>AddPaymentMethod(PaymentMethodViewModel paymentMethod);
         Task<bool> DeletePaymentMethod(int id);
         Task<bool> UpdatePaymentMethod(PaymentMethodViewModel paymentMethod);
     }

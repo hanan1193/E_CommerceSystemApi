@@ -45,8 +45,8 @@ namespace E_CommerceSystemApi.Controllers
             {
                 return BadRequest("Role data is required.");
             }
-            await _roleService.AddRole(role);
-            return CreatedAtAction(nameof(GetRole), new { id = role.RoleID }, role);
+           var createdRole= await _roleService.AddRole(role);
+            return CreatedAtAction(nameof(GetRole), new { id = createdRole.RoleID }, createdRole);
 
         }
         [HttpPut]

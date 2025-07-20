@@ -38,15 +38,17 @@ namespace E_CommerceSystemApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPaymentMethod([FromBody] PaymentMethodViewModel paymentMethodViewModel)
         {
-            await _paymentMethodService.AddPaymentMethod(paymentMethodViewModel);
+           var createdPaymentMethod= await _paymentMethodService.AddPaymentMethod(paymentMethodViewModel);
             //return Ok("paymentMethod added successfully");
-            return CreatedAtAction(nameof(GetPaymentMethod), new { id = paymentMethodViewModel.PaymentMethodID }, paymentMethodViewModel);
-        }
+            return CreatedAtAction(nameof(GetPaymentMethod), new { id = createdPaymentMethod.PaymentMethodID }, createdPaymentMethod);
+        } 
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePaymentMethod([FromBody] PaymentMethodViewModel model)
+        public async Task<IActionResult> UpdatePaymentMethod(int id,[FromBody] PaymentMethodViewModel paymentMethodViewModel)
         {
-            var result = await _paymentMethodService.UpdatePaymentMethod(model);
+            if (id != paymentMethodViewModel.PaymentMethodID)
+                return BadRequest("ID mismatch");
+            var result = await _paymentMethodService.UpdatePaymentMethod(paymentMethodViewModel);
             if (!result)
                 return NotFound("PaymentMethod not found");
 
@@ -62,7 +64,6 @@ namespace E_CommerceSystemApi.Controllers
 
             return Ok("PaymentMethod deleted successfully");
         }
-
     }
 }
 

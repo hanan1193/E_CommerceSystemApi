@@ -23,16 +23,18 @@ namespace E_CommerceSystemApi.BLL.Services.impl
             _mapper = mapper;
 
         }
-        public async Task AddPaymentMethod(PaymentMethodViewModel paymentMethodViewModel)
+        public async Task<PaymentMethodViewModel> AddPaymentMethod(PaymentMethodViewModel paymentMethodViewModel)
         {
             try
             {
                 var paymentMethod = _mapper.Map<PaymentMethod>(paymentMethodViewModel);
                 await _paymentMethodRepository.Add(paymentMethod);
+                return _mapper.Map<PaymentMethodViewModel>(paymentMethod);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in AddPaymentMethod: {ex.Message}");
+                return null;
             }
 
         }

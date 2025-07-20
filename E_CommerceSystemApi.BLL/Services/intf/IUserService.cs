@@ -18,7 +18,7 @@ namespace E_CommerceSystemApi.BLL.Services.intf
         //Task UpdateUser(User user);
         Task<IEnumerable<UserViewModel>> GetUsers();
         Task<UserViewModel> GetUserById(int id);
-        Task AddUser(UserCreateViewModel user);
+        Task<UserViewModel> AddUser(UserCreateViewModel user);
         Task DeleteUser(int id);
         Task UpdateUser(UserUpdateViewModel user);
 

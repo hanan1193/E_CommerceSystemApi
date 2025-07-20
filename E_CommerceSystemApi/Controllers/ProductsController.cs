@@ -38,19 +38,23 @@ namespace E_CommerceSystemApi.Controllers
             return Ok(product);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateProduct([FromBody] ProductViewModel product)
+        public async Task<IActionResult> CreateProduct([FromBody] ProductViewModel productViewModel)
         {
-            if (product == null)
+            if (productViewModel == null)
             {
                 return BadRequest("product data is required.");
             }
-            await _productService.AddProduct(product);
-            return CreatedAtAction(nameof(Getproduct), new { id = product.ProductID }, product);
+           var createdProduct= await _productService.AddProduct(productViewModel);
+            return CreatedAtAction(nameof(Getproduct), new { id = createdProduct.ProductID }, createdProduct);
 
         }
         [HttpPut]
-        public async Task<IActionResult> Updateproduct([FromBody] ProductViewModel product)
+        public async Task<IActionResult> Updateproduct(int id,[FromBody] ProductViewModel product)
         {
+            if(id != product.ProductID)
+            {
+                return BadRequest("ID mismatch. Please provide the correct ID.");
+            }
             if (product == null)
             {
                 return BadRequest("product data is required.");
