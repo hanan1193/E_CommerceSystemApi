@@ -48,5 +48,9 @@ namespace E_CommerceSystemApi.DAL.Repository.impl
             _context.Set<T>().Update(entity);
             await _context.SaveChangesAsync();
         }
+        public IQueryable<T> GetAllQueryable()
+        {
+            return _context.Set<T>().AsQueryable();
+        }
     }
 }

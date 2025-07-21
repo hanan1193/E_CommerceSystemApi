@@ -15,6 +15,7 @@ namespace E_CommerceSystemApi.DAL.Repository.intf
         Task Add(T entity);
         Task Update(T entity);
         Task Delete(int id);
+        IQueryable<T> GetAllQueryable();
 
     }
 }

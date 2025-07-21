@@ -8,6 +8,7 @@ using E_CommerceSystemApi.BLL.Services.intf;
 using E_CommerceSystemApi.BLL.ViewModels;
 using E_CommerceSystemApi.DAL.Models;
 using E_CommerceSystemApi.DAL.Repository.intf;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceSystemApi.BLL.Services.impl
 {
@@ -38,8 +39,19 @@ namespace E_CommerceSystemApi.BLL.Services.impl
             }
                 
             }
+        // This method does the following:
+        // 1.Retrieves all users from the repository.
+        // 2.Includes the related role information for each user.
+        //3. returns the first user that matches the provided eamail and password.
+        public User? Authenticate(string email, string password)
+        {
+         return _UserRepository
+        .GetAllQueryable()
+        .Include(u => u.role)
+        .FirstOrDefault(u => u.Email == email && u.Password == password); ;
+        }
 
-            public async Task DeleteUser(int id)
+        public async Task DeleteUser(int id)
             {
                 var existingUser = await _UserRepository.GetById(id);
                 if (existingUser == null)

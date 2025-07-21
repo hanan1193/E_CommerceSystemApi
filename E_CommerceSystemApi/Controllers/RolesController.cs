@@ -1,12 +1,14 @@
 ﻿using E_CommerceSystemApi.BLL.Services.impl;
 using E_CommerceSystemApi.BLL.Services.intf;
 using E_CommerceSystemApi.BLL.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceSystemApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RolesController : ControllerBase
@@ -16,6 +18,7 @@ namespace E_CommerceSystemApi.Controllers
         {
             _roleService = roleService;
         }
+        [AllowAnonymous]
         //api/roles/
         [HttpGet]
         public async Task<IActionResult> GetRoles()
@@ -27,6 +30,7 @@ namespace E_CommerceSystemApi.Controllers
             }
             return Ok(roles);
         }
+        [Authorize(Roles = "Admin")]
         // api/roles/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRole(int id)
@@ -38,6 +42,7 @@ namespace E_CommerceSystemApi.Controllers
             }
             return Ok(role);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateRole([FromBody] RoleViewModel role)
         {
@@ -49,6 +54,7 @@ namespace E_CommerceSystemApi.Controllers
             return CreatedAtAction(nameof(GetRole), new { id = createdRole.RoleID }, createdRole);
 
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateRole([FromBody] RoleViewModel role)
         {
@@ -73,6 +79,7 @@ namespace E_CommerceSystemApi.Controllers
         //    await _roleService.DeleteRole(id);
         //    return Ok("$ Role with ID {id} deleted successfully.");
         //}
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {

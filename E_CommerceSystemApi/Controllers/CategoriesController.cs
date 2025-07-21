@@ -5,10 +5,12 @@ using E_CommerceSystemApi.DAL.Data;
 using E_CommerceSystemApi.DAL.Models;
 using E_CommerceSystemApi.BLL.Services.intf;
 using E_CommerceSystemApi.BLL.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace E_CommerceSystemApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase
@@ -28,7 +30,7 @@ namespace E_CommerceSystemApi.Controllers
             var categories = await _categoryService.GetCategories();
             return Ok(categories);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategory(int id)
         {
@@ -38,15 +40,17 @@ namespace E_CommerceSystemApi.Controllers
 
             return Ok(category);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddCategory([FromBody] CategoryViewModel categoryViewModelmodel)
         {
             var createdCategory= await _categoryService.AddCategory(categoryViewModelmodel);
             return CreatedAtAction(nameof(GetCategory), new { id = createdCategory.Id }, createdCategory);
         }
+
         // api/Categories/{id} 
         // Endpoint to update a category by ID.
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCategory(int id,[FromBody] CategoryViewModel categoryViewModelmodel)
         {
@@ -58,7 +62,7 @@ namespace E_CommerceSystemApi.Controllers
 
             return Ok("Category updated successfully");
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {

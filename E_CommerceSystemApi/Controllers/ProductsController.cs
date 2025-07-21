@@ -1,12 +1,14 @@
 ﻿using E_CommerceSystemApi.BLL.Services.intf;
 using E_CommerceSystemApi.BLL.ViewModels;
 using E_CommerceSystemApi.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceSystemApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -37,6 +39,8 @@ namespace E_CommerceSystemApi.Controllers
                 return NotFound();
             return Ok(product);
         }
+        // Endpoint restricted to Admin role
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] ProductViewModel productViewModel)
         {
@@ -48,6 +52,7 @@ namespace E_CommerceSystemApi.Controllers
             return CreatedAtAction(nameof(Getproduct), new { id = createdProduct.ProductID }, createdProduct);
 
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> Updateproduct(int id,[FromBody] ProductViewModel product)
         {
@@ -62,6 +67,7 @@ namespace E_CommerceSystemApi.Controllers
             await _productService.UpdateProduct(product);
             return Ok("Product updated successfully");
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {

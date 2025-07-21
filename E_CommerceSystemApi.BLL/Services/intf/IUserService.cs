@@ -21,6 +21,8 @@ namespace E_CommerceSystemApi.BLL.Services.intf
         Task<UserViewModel> AddUser(UserCreateViewModel user);
         Task DeleteUser(int id);
         Task UpdateUser(UserUpdateViewModel user);
+        // Authentication method to verify user credentials
+        User? Authenticate(string email, string password);
 
     }
 }

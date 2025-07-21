@@ -1,10 +1,12 @@
 ﻿using E_CommerceSystemApi.BLL.Services.intf;
 using E_CommerceSystemApi.BLL.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_CommerceSystemApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PaymentMethodsController : ControllerBase
@@ -34,15 +36,15 @@ namespace E_CommerceSystemApi.Controllers
 
             return Ok(paymentMethod);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddPaymentMethod([FromBody] PaymentMethodViewModel paymentMethodViewModel)
         {
            var createdPaymentMethod= await _paymentMethodService.AddPaymentMethod(paymentMethodViewModel);
             //return Ok("paymentMethod added successfully");
             return CreatedAtAction(nameof(GetPaymentMethod), new { id = createdPaymentMethod.PaymentMethodID }, createdPaymentMethod);
-        } 
-
+        }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdatePaymentMethod(int id,[FromBody] PaymentMethodViewModel paymentMethodViewModel)
         {
@@ -54,7 +56,7 @@ namespace E_CommerceSystemApi.Controllers
 
             return Ok("PaymentMethod updated successfully");
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePaymentMethod(int id)
         {
