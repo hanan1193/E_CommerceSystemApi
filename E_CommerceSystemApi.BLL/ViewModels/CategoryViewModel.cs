@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_CommerceSystemApi.DAL.Models
+namespace E_CommerceSystemApi.BLL.ViewModels
 {
-    public class Category
+    public class CategoryViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
